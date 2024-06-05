@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Management</title>
+</head>
+<body>
+    <h1>Career Management</h1>
+
+    <section>
+        <h2>Create Career</h2>
+        <form id="create-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <br>
+            <label for="code">Code:</label>
+            <input type="text" id="code" name="code" required>
+            <br>
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description">
+            <br>
+            <button type="submit">Create Career</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Update Career</h2>
+        <form id="update-form">
+            <label for="update-id">ID:</label>
+            <input type="text" id="update-id" name="id" required>
+            <br>
+            <label for="update-name">Name:</label>
+            <input type="text" id="update-name" name="name">
+            <br>
+            <label for="update-code">Code:</label>
+            <input type="text" id="update-code" name="code">
+            <br>
+            <label for="update-description">Description:</label>
+            <input type="text" id="update-description" name="description">
+            <br>
+            <button type="submit">Update Career</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Delete Career</h2>
+        <form id="delete-form">
+            <label for="delete-id">ID:</label>
+            <input type="text" id="delete-id" name="id" required>
+            <br>
+            <button type="submit">Delete Career</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>All Careers</h2>
+        <button onclick="fetchCareers()">Fetch All Careers</button>
+        <ul id="careers-list"></ul>
+    </section>
+
+    <script>
+        const apiUrl = 'http://localhost:3001/api/carrers';
+
+        document.getElementById('create-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const code = document.getElementById('code').value;
+            const description = document.getElementById('description').value;
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, code, description })
+            });
+            const data = await response.json();
+            console.log(data);
+        });
+
+        document.getElementById('update-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('update-id').value;
+            const name = document.getElementById('update-name').value;
+            const code = document.getElementById('update-code').value;
+            const description = document.getElementById('update-description').value;
+
+            const response = await fetch(`${apiUrl}?id=${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, code, description })
+            });
+            const data = await response.json();
+            console.log(data);
+        });
+
+        document.getElementById('delete-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('delete-id').value;
+
+            const response = await fetch(`${apiUrl}?id=${id}`, {
+                method: 'DELETE'
+            });
+            const data = await response.json();
+            console.log(data);
+        });
+
+        async function fetchCareers() {
+            const response = await fetch(apiUrl);
+            const careers = await response.json();
+            const careersList = document.getElementById('careers-list');
+            careersList.innerHTML = '';
+            console.log(careers);
+            careers.forEach(career => {
+                const li = document.createElement('li');
+                li.textContent = `${career._id} -  ${career.name} (Code: ${career.code}) - ${career.description}`;
+                careersList.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>

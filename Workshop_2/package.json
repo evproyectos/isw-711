@@ -1,0 +1,31 @@
+{
+  "name": "rest_api_express_mongo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha ./tests/*.spec.js",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evproyectos/rest_api_express_mongo.git"
+  },
+  "author": "evproyectos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/evproyectos/rest_api_express_mongo/issues"
+  },
+  "homepage": "https://github.com/evproyectos/rest_api_express_mongo#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.0",
+    "dotenv": "^16.4.5",
+    "nodemon": "^3.1.0"
+  },
+  "devDependencies": {
+    "chai": "^5.1.1",
+    "mocha": "^10.4.0"
+  }
+}

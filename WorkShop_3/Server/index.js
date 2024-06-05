@@ -32,17 +32,17 @@ const connectToDatabase = async () => {
 connectToDatabase();
 
 const {
-  careerPost,
-  careerGet,
-  careerDelete,
-  careerPut
-} = require("../Controllers/careerController");
+  CareerPost,
+  CareerGet,
+  CareerDelete,
+  CareerPut
+} = require("./Controllers/CareerController");
 
 
-app.get("/api/careers", careerGet);
-app.post("/api/careers", careerPost);
-app.delete("/api/careers", careerDelete);
-app.put("/api/careers",careerPut);
+app.get("/api/careers", CareerGet);
+app.post("/api/careers", CareerPost);
+app.delete("/api/careers", CareerDelete);
+app.put("/api/careers",CareerPut);
 
 
 

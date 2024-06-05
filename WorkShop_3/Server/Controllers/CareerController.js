@@ -85,10 +85,9 @@ const CareerDelete = async (req, res) => {
             }
             
             await career.deleteOne();
-            res.status(204).json({}); // No content
+            res.status(209).json({"message":"Deleted Successfuly"}); // No content
         } catch (err) {
-            console.error('Error occurred:', err);
-            res.status(500).json({ error: 'Internal Server Error' });
+            res.status(404).json({ error: 'Career doesnt exist' });
         }
     } else {
         res.status(404).json({ error: "Career doesn't exist" });

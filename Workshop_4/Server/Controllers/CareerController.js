@@ -44,6 +44,7 @@ const CareerPost = async (req, res) => {
 
 
 const CareerGet = async (req, res) => {
+    const sortOrder = req.query.sortOrder === 'desc' ? -1 : 1;
     // if an specific career is required
     if (req.query && req.query.id) {
       Career.findById(req.query.id)
@@ -55,9 +56,21 @@ const CareerGet = async (req, res) => {
           console.log('error while queryting the career', err)
           res.json({ error: "Career doesnt exist" })
         });
+      
+    }else if(req.query && req.query.name) {
+      Career.find({name: req.query.name})
+        .then( (career) => {
+          res.json(career);
+        })
+        .catch(err => {
+          res.status(404);
+          console.log('error while queryting the career', err)
+          res.json({ error: "Career doesnt exist" })
+        });
     } else {
       // get all careers
       Career.find()
+        .sort({ name: sortOrder })
         .then( careers => {
           res.json(careers);
         })
